@@ -5,17 +5,17 @@
   --foreground: #171717;
 }
 
-@theme inline {
+/*@theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
+}*/
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #ededed ;
+    --foreground: #0a0a0a;
   }
 }
 
@@ -24,3 +24,215 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+
+/*NAVBAR*/
+.navbar {
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 2rem;
+  background: #fff;
+  border-bottom: 1px solid #eee;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background-color: white;
+}
+
+/*Mobile Navbar*/
+@media (max-width: 767px) {
+  .mobile-navbar {
+    align-items: start;
+    justify-content: space-between;
+    padding: 0.7rem 1.1rem;
+    background: #fff;
+    border-bottom: 1px solid #eee;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 105px;
+    width: 100%;
+    z-index: 1000;
+    background-color: white;
+  }
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #333;
+}
+
+
+/*CONTACT SECTION*/
+.icon-contact {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+/*Estilos para moviles por defecto*/
+.icon-contact-group {
+    margin-top: 32px;
+    gap: 42px; /* Espacio entre iconos */
+}
+
+/*Movimiento mas suave al hacer hover*/
+.icon-contact img{
+  transition: transform 0.2s;
+}
+
+.icon-contact:hover img {
+  transform: translateY(-8px) scale(1.1);
+}
+
+/*Estilos para escritorios*/
+@media (min-width: 768px) {
+  .icon-contact-group {
+    margin-top: 6px;
+    margin-right: 38px;
+    
+  }
+  .icon-contact img {
+    width: 62px;
+    height: 62px;
+  }
+  .hr-dashed {
+  width: 70%;
+    border-top: 0.14rem dashed #7d7b7b;
+    border-color: #7d7b7b;
+  }
+}
+
+/*Estilos para moviles*/
+@media (max-width: 767px) {
+  .ferrelect-map {
+    width: 58%;
+    height: 100px;
+  }
+  .icon-contact img{
+    width: 36px;
+    height: 36px;
+  }
+}
+
+
+/*CARDS SECTION*/
+/*Estilos para escritorios*/
+@media (min-width: 768px) {
+  .card-image {
+    width: 130px;
+    padding-bottom: 0px;
+  }
+  .card-aspect {
+    height: 135px;
+    width: 156px;
+    margin-left: 9px;
+    margin-bottom: 16px;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    border-radius: 0.5rem;
+  }
+  .card-title {
+    display: -webkit-box;
+    line-clamp: 3;
+    -webkit-line-clamp: 3; /* Cambia el número de líneas según lo que quieras */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .bt-add {
+    width: 24px;
+    height: 20px;
+    font-size: 0.9rem;
+    padding: 0;
+    min-width: 0;
+  }
+  .card-aspect input[type="number"] {
+    width: 40px !important;
+    height: 29px;
+    font-size: 0.9rem;
+    padding: 0;
+    min-width: 0;
+  }
+  .bt-cart {
+    height: 29px;
+    width: 64px;
+    min-width: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .catg-btn{
+    background: white;
+    border: 1.5px solid #ccc;
+    border-radius: 8px;
+    padding: 0.3rem 1rem;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: bold;
+  }
+}
+
+/*Estilos para moviles*/
+@media (max-width: 767px) {
+  .card-aspect {
+    height: 85px;
+    width: 80px;
+    margin-left: 5px;
+    margin-bottom: 7px;
+    padding: 3px;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    border-radius: 0.5rem;
+    /*overflow: hidden;*/
+  }
+  .card-title {
+    display: -webkit-box;
+    line-clamp: 2;
+    -webkit-line-clamp: 2; /* Cambia el número de líneas según lo que quieras */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .bt-add {
+    width: 18px;
+    height: 20px;
+    font-size: 0.7rem;
+    padding: 0;
+    min-width: 0;
+  }
+  .card-aspect input[type="number"] {
+    width: 32px !important;
+    height: 20px;
+    font-size: 0.7rem;
+    padding: 0;
+    min-width: 0;
+  }
+  .bt-cart {
+    height: 22px;
+    width: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    min-width: 0;
+  }
+  .catg-btn {
+      background: white;
+      border: 1.5px solid #ccc;
+      border-radius: 8px;
+      padding: 0.3rem 1rem;
+      cursor: pointer;
+      font-size: 0.88rem;
+      font-weight: bold;
+  }
+}
+
