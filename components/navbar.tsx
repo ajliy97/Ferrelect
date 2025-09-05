@@ -1,18 +1,39 @@
 "use client"
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { ProdSearch } from "./hooks/search";
 
 
 type NavbarProps = {
     className?: string;
+    searchTerm: string;
+    setSearchTerm: (value: string) => void;
 };
 
-export function Navbar({className = ""}: NavbarProps) {
+export function Navbar({className = "", searchTerm, setSearchTerm}: NavbarProps) {
     const [open, setOpen] = useState(false);
+    const menuRef = useRef<HTMLDivElement>(null);
 
     //Categorias
     const categories = [ "Ferreteria", "Electrónica" ];
+    
+    // Cierra el menú si se hace click fuera
+    useEffect(() => {
+        function handleClickOutside(event: MouseEvent) {
+            if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+                setOpen(false);
+            }
+        }
+        if (open) {
+            document.addEventListener("mousedown", handleClickOutside);
+        } else {
+            document.removeEventListener("mousedown", handleClickOutside);
+        }
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [open]);
 
     return (
         <nav className={`navbar ${className}`}>
@@ -20,52 +41,28 @@ export function Navbar({className = ""}: NavbarProps) {
             <div style={{ display: "flex", alignItems: "center", position: "relative" }}>
                 <a className="nav-link" href="/">
                     <Image src="/plug.png" alt="Logo" width={40} height={40} />
-                    <span style={{ marginLeft: "0.75rem", fontWeight: "bold", fontSize: "1.2rem", color: "black" }}>Ferrelect</span>
+                    <span className="nav-text" style={{ marginLeft: "0.75rem", fontWeight: "bold", fontSize: "1.2rem", color: "white" }}>Ferrelect</span>
                 </a>
                 {/*Menu desplegable Categoria*/}
-                <div style={{ marginLeft: "2rem", position: "relative" }}>
-                    <button className="catg-btn"
-                        style={{
-                            background: "white",
-                            border: "1.5px solid #ccc",
-                            borderRadius: "8px",
-                            padding: "0.3rem 1rem",
-                            cursor: "pointer",
-                            fontSize: "1.1rem",
-                            fontWeight: "bold",
-                        }}
-                        onClick={() => setOpen(v => !v)}
-                        onBlur={() => setTimeout(() => setOpen(false), 100)}
+                <div style={{ marginLeft: "2rem", position: "relative" }} ref={menuRef} >
+                    <button 
+                        className={`bt-hamb ${open ? "open" : ""}`}
+                        onClick={() => setOpen(o => !o)}
                     >
-                        Categoría
+                        <span style={{ color: "white", marginRight: "0.2rem" }}>Categoría</span>
+                        <div className="hamb-bars">
+                            <div />
+                            <div />
+                            <div />
+                        </div>
                     </button>
                     {open && (
-                        <ul
-                            style={{
-                                position: "absolute",
-                                top: "110%",
-                                left: 0,
-                                background: "white",
-                                border: "1px solid #ccc",
-                                borderRadius: "8px",
-                                boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
-                                minWidth: "150px",
-                                zIndex: 10,
-                                padding: 0,
-                                margin: 0,
-                                listStyle: "none"
-                            }}
+                        <ul className="hamb-list"
                         >
                             {categories.map(cat => (
-                                <li key={cat}>
+                                <li key={cat} className="hamb-catg">
                                     <a
                                         href={`/category/${cat}`}
-                                        style={{ 
-                                            display: "block", 
-                                            padding: "0.5rem 1rem", 
-                                            textDecoration: "none", 
-                                            color: "black" 
-                                        }}
                                         onClick={() => setOpen(false)}
                                     >
                                         {cat}
@@ -74,34 +71,23 @@ export function Navbar({className = ""}: NavbarProps) {
                             ))}
                         </ul>
                     )}
+                </div>
             </div>
-        </div>
 
             {/* Barra de búsqueda en el centro */}
             <div style={{flex: 1, display: "flex", justifyContent: "center", alignItems: "center" }} >
-                <input
-                    type="text"
-                    placeholder="Buscar productos..."
-                    style={{
-                        width: "100%",
-                        maxWidth: "350px",
-                        padding: "0.5rem 1rem",
-                        borderRadius: "20px",
-                        border: "1px solid #ccc",
-                        outline: "none"
-                    }}
-                />
+                <ProdSearch value={searchTerm} onChange={setSearchTerm} />
             </div>
 
             {/* Usuario y carro a la derecha */}
             <div style={{ display: "flex", alignItems: "center", gap: "1.5rem" }}>
                 <a className="nav-link" href="/user">
                     <Image className="nav-icon" src="/user.png" alt="user icon" width={24} height={24} />
-                    <span style={{ marginLeft: "0.7rem" }}>Usuario</span>
+                    <span className="nav-text" style={{ marginLeft: "0.7rem", color: "white" }}>Usuario</span>
                 </a>
                 <a className="nav-link" href="/cart">
-                    <Image src="/shopping-cart.png"  alt="user icon" width={24} height={24} />
-                    <span style={{ marginLeft: "0.7rem" }}>Carro</span>
+                    <Image src="/shopping-cart.png"  alt="user icon" width={24} height={24} color="white" />
+                    <span className="nav-text" style={{ marginLeft: "0.7rem", color: "white" }}>Carro</span>
                 </a>
             </div>
         </nav>
